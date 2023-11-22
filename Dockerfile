@@ -11,6 +11,6 @@ RUN bundle install -j4
 
 EXPOSE 3000
 
-
-RUN chmod +x docker-entrypoint.sh
+COPY docker-entrypoint.sh /app/
+RUN chmod +x /app/docker-entrypoint.sh
 ENTRYPOINT ["docker-entrypoint.sh"]
