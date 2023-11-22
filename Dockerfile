@@ -10,3 +10,6 @@ ADD . $APP_HOME
 RUN bundle install -j4
 
 EXPOSE 3000
+COPY ./docker-entrypoint.sh /
+RUN chmod +x /docker-entrypoint.sh
+ENTRYPOINT ["./docker-entrypoint.sh"]
