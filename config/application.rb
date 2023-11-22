@@ -6,10 +6,10 @@ require "rails/all"
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-module RailsEx
+module Minvetsite
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 5.1
+    config.load_defaults 7.0
 
     # Configuration for the application, engines, and railties goes here.
     #
@@ -18,5 +18,10 @@ module RailsEx
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+    if ENV["RAILS_LOG_TO_STDOUT"].present?
+      logger           = ActiveSupport::Logger.new(STDOUT)
+      logger.formatter = config.log_formatter
+      config.logger    = ActiveSupport::TaggedLogging.new(logger)
+    end
   end
 end
