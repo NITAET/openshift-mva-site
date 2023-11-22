@@ -1,5 +1,20 @@
-#!/bin/bash
+#!/bin/sh
 set -e
 
-echo "Executing bundle exec 'rake db:migrate' ..."
-RAILS_ENV=production bundle exec rake db:migrate
+echo "start"
+if [ -f /app/tmp/pids/server.pid ]; then
+  rm /app/tmp/pids/server.pid
+fi
+
+echo "prepare"
+
+echo "migrate"
+bundle exec rake db:migrate 2>/dev/null
+echo "migrate ok"
+bundle exec rake assets:precompile
+
+echo "start app"
+bundle exec puma -C config/puma.rb
+echo "start app ok"
+
+exec bundle exec "$@"
