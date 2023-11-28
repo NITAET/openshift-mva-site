@@ -50,7 +50,7 @@ COPY --from=dependencies /usr/local/bundle/ /usr/local/bundle/
 
 # Copy over npm packages from the dependencies stage
 # Note that we have to use `--chown` here
-COPY --chown=mva-official-site-user --from=dependencies /node_modules/ node_modules/
+# COPY --chown=mva-official-site-user --from=dependencies /node_modules/ node_modules/
 
 # Finally, copy over the code
 # This is where the .dockerignore file comes into play
