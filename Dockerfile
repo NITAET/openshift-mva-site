@@ -87,7 +87,7 @@ ENV PORT=3000
 EXPOSE 3000
 
 # Install assets
-RUN RAILS_ENV=$RAILS_ENV bundle exec rake assets:precompile
+# RUN RAILS_ENV=$RAILS_ENV bundle exec rake assets:precompile
 
 # Launch the server
 CMD ["./migrate-database.sh"]
