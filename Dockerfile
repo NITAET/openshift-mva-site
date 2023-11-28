@@ -30,7 +30,7 @@ RUN chown mva-official-site-user $APP_HOME
 # We'll install the app in this directory
 WORKDIR $APP_HOME
 COPY --chown=mva-official-site-user . $APP_HOME
-COPY --chown=mva-official-site-user migrate-database.sh /$APP_HOME
+# COPY --chown=mva-official-site-user migrate-database.sh /$APP_HOME
 RUN chmod +x migrate-database.sh
 
 # Install gems (excluding development/test dependencies)
@@ -90,5 +90,5 @@ EXPOSE 3000
 # RUN RAILS_ENV=$RAILS_ENV bundle exec rake assets:precompile
 
 # Launch the server
-CMD ["./migrate-database.sh"]
+# CMD ["./migrate-database.sh"]
 # CMD ["bundle", "exec", "rackup"]
