@@ -1,6 +1,6 @@
 FROM ruby:3.1-alpine
 
-RUN apk update && apk add build-base tzdata shared-mime-info nodejs  postgresql-dev postgresql-client imagemagick imagemagick-dev imagemagick-libs yarn
+RUN apk update && apk add build-base tzdata shared-mime-info nodejs postgresql-dev postgresql-client imagemagick imagemagick-dev imagemagick-libs yarn
 
 ENV APP_HOME /app
 RUN mkdir $APP_HOME
