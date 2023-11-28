@@ -34,10 +34,10 @@ COPY --chown=mva-official-site-user . $APP_HOME
 # Install gems (excluding development/test dependencies)
 RUN bundle install --jobs=4 --retry=3
 
-COPY package.json yarn.lock ./
+# COPY package.json yarn.lock ./
 
 # Install npm packages
-RUN yarn install --frozen-lockfile
+# RUN yarn install --frozen-lockfile
 
 # We're back at the base stage
 FROM base
