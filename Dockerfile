@@ -23,15 +23,13 @@ RUN apk add --update build-base
 # Create a non-root user to run the app and own app-specific files
 RUN adduser -D mva-official-site-user
 
-# Set app home directory and chowm it to non-root user
+# Set app home directory and chown it to non-root user
 ENV APP_HOME /app
 RUN mkdir $APP_HOME
 RUN chown mva-official-site-user $APP_HOME
 # We'll install the app in this directory
 WORKDIR $APP_HOME
 COPY --chown=mva-official-site-user . $APP_HOME
-# COPY --chown=mva-official-site-user migrate-database.sh /$APP_HOME
-RUN chmod +x migrate-database.sh
 
 # Install gems (excluding development/test dependencies)
 RUN bundle install --jobs=4 --retry=3
@@ -43,6 +41,16 @@ RUN bundle install --jobs=4 --retry=3
 
 # We're back at the base stage
 FROM base
+
+# Create a non-root user to run the app and own app-specific files
+RUN adduser -D mva-official-site-user
+
+# Set app home directory and chown it to non-root user
+ENV APP_HOME /app
+RUN mkdir $APP_HOME
+RUN chown mva-official-site-user $APP_HOME
+# We'll install the app in this directory
+WORKDIR $APP_HOME
 
 # Switch to non-root user
 USER mva-official-site-user
@@ -57,7 +65,9 @@ COPY --from=dependencies /usr/local/bundle/ /usr/local/bundle/
 # Finally, copy over the code
 # This is where the .dockerignore file comes into play
 # Note that we have to use `--chown` here
-# COPY --chown=mva-official-site-user . ./
+COPY --chown=mva-official-site-user . ./
+# COPY --chown=mva-official-site-user migrate-database.sh /$APP_HOME
+RUN chmod +x ./migrate-database.sh
 
 # Set variables parameters
 ENV RAILS_ENV=development
@@ -90,5 +100,5 @@ EXPOSE 3000
 # RUN RAILS_ENV=$RAILS_ENV bundle exec rake assets:precompile
 
 # Launch the server
-# CMD ["./migrate-database.sh"]
+CMD ["./migrate-database.sh"]
 # CMD ["bundle", "exec", "rackup"]
