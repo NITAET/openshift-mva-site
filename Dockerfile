@@ -55,7 +55,7 @@ COPY --from=dependencies /usr/local/bundle/ /usr/local/bundle/
 # Finally, copy over the code
 # This is where the .dockerignore file comes into play
 # Note that we have to use `--chown` here
-COPY --chown=mva-official-site-user . ./
+# COPY --chown=mva-official-site-user . ./
 
 # Set variables parameters
 ENV RAILS_ENV=development
