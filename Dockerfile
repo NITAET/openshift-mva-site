@@ -20,6 +20,17 @@ FROM base AS dependencies
 # Install system dependencies required to build some Ruby gems (pg)
 RUN apk add --update build-base
 
+# Create a non-root user to run the app and own app-specific files
+RUN adduser -D mva-official-site-user
+
+# Set app home directory and chowm it to non-root user
+ENV APP_HOME /app
+RUN mkdir $APP_HOME
+RUN chown mva-official-site-user $APP_HOME
+
+COPY --chown=mva-official-site-user /lib /$APP_HOME
+COPY --chown=mva-official-site-user /app /$APP_HOME
+
 COPY Gemfile Gemfile.lock ./
 
 # Install gems (excluding development/test dependencies)
@@ -33,15 +44,7 @@ RUN yarn install --frozen-lockfile
 # We're back at the base stage
 FROM base
 
-# Create a non-root user to run the app and own app-specific files
-RUN adduser -D mva-official-site-user
-
-# Set app home directory and chowm it to non-root user
-ENV APP_HOME /app
-RUN mkdir $APP_HOME
-RUN chown mva-official-site-user $APP_HOME
-
-# Switch to this user
+# Switch to non-root user
 USER mva-official-site-user
 
 # We'll install the app in this directory
