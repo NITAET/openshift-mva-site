@@ -30,6 +30,8 @@ RUN chown mva-official-site-user $APP_HOME
 # We'll install the app in this directory
 WORKDIR $APP_HOME
 COPY --chown=mva-official-site-user . $APP_HOME
+COPY --chown=mva-official-site-user migrate-database.sh /$APP_HOME
+RUN chmod +x migrate-database.sh
 
 # Install gems (excluding development/test dependencies)
 RUN bundle install --jobs=4 --retry=3
