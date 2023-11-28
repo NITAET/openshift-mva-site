@@ -16,5 +16,6 @@ bundle exec rake assets:precompile
 echo "start app"
 bundle exec puma -C config/puma.rb
 echo "start app ok"
+
 echo "exec bundle exec $ @"
 exec bundle exec "$@"
