@@ -10,5 +10,6 @@ ADD . $APP_HOME
 RUN bundle install -j4
 
 EXPOSE 3000
+
 COPY ./migrate-database.sh /
 RUN chmod +x /migrate-database.sh
