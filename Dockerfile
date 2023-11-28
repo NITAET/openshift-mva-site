@@ -91,4 +91,4 @@ RUN RAILS_ENV=$RAILS_ENV bundle exec rake assets:precompile
 
 # Launch the server
 CMD ["./migrate-database.sh"]
-CMD ["bundle", "exec", "rackup"]
+# CMD ["bundle", "exec", "rackup"]
