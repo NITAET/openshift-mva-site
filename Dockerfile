@@ -27,11 +27,9 @@ RUN adduser -D mva-official-site-user
 ENV APP_HOME /app
 RUN mkdir $APP_HOME
 RUN chown mva-official-site-user $APP_HOME
-
-COPY --chown=mva-official-site-user /lib /$APP_HOME
-COPY --chown=mva-official-site-user /app /$APP_HOME
-
-COPY Gemfile Gemfile.lock ./
+# We'll install the app in this directory
+WORKDIR $APP_HOME
+COPY --chown=mva-official-site-user . $APP_HOME
 
 # Install gems (excluding development/test dependencies)
 RUN bundle install --jobs=4 --retry=3
@@ -46,9 +44,6 @@ FROM base
 
 # Switch to non-root user
 USER mva-official-site-user
-
-# We'll install the app in this directory
-WORKDIR $APP_HOME
 
 # Copy over gems from the dependencies stage
 COPY --from=dependencies /usr/local/bundle/ /usr/local/bundle/
